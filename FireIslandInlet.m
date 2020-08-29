@@ -1,7 +1,7 @@
 clearvars; close all; clc;
 %% DESCRIPTION: Generate the Fire Island water-tight patch for insertion into the GSBv4 msh.
 % AUTHOR: KEITH ROBERTS
-% DATE: August 29, 2020
+% LAST UPDATE: August 29, 2020
 
 %% DECLARE PARAMETERS FOR MESHING
 FI = [40.629540, -73.266107]; % Midpoint of proposed Fire Island barrier
@@ -133,6 +133,7 @@ mshopts = meshgen('ef',fh,'bou',gdat2,'plot_on',1,...
 
 m2 = mshopts.build.grd;
 
+m2 = clean(m2,'ds',0,'db',0.10); 
 %% INTERPOLATE TOPOBATHY AND MAKE SURE ITS SMOOTH
 m3 = interpFP(m2,gdat2{1},muw,gdat{1});
 
