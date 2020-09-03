@@ -10,4 +10,4 @@ Six inlets along the Great South Bay of Long Island, New York, U.S.A. are consid
 * Jones Inlet
 * New Inlet
 
-Patches are merged into the parent mesh using the script `Mmrge.m`
+Patches are merged into the parent mesh using the script `merge_patch.m`
