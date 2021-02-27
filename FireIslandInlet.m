@@ -91,5 +91,6 @@ m4 = make_bc(m4,'weirs',gdat{2});    % manually specify: mode 1, 5m above MSL.
 
 save FI m4
 
+save gdat_fi_with weir gdat
 %write(m4, 'FI_hires_mesh', '14')
 
