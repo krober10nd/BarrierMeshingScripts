@@ -1,8 +1,10 @@
 clearvars; close all; clc;
 %% DESCRIPTION: Generate the Fire Island water-tight patch for insertion into the GSBv4 msh.
 % AUTHOR: KEITH ROBERTS
-% LAST UPDATE: August 30, 2020
+% LAST UPDATE: Feb. 27, 2021
 
+% triangle res at outer bbox 110m
+% reduce NS outer bbox to 0.375 deg
 %% DECLARE PARAMETERS FOR MESHING
 FI = [40.629540, -73.266107]; % Midpoint of proposed Fire Island barrier
 
@@ -13,8 +15,7 @@ FI_WEIR_STRUCT.width = 10;  % 10-m wide
 FI_WEIR_STRUCT.min_ele = 40; % 40-m element sizes on front/back faces
 FI_WEIR_STRUCT.crest_height=5; % assume a height of 5-m above the free surface.
 
-% 0.05 x 0.05 degree box around FI with 40-m min resolution 
-BSZ = 0.04;
+BSZ = 0.03;
 BBOXES{1} = [FI(2)-BSZ FI(2)+BSZ; FI(1)-BSZ FI(1)+BSZ];
 
 % 0.025 x 0.025 degree box around FI with 10-m min. resolution
@@ -24,7 +25,7 @@ BBOXES{2} = [FI(2)-BSZ FI(2)+BSZ; FI(1)-BSZ FI(1)+BSZ];
 
 COASTLINE = 'NCEI_Sandy_DEMs_1m_NAVD88_contour';
 FLOODLINE = 'NCEI_Sandy_DEMs_10m_NAVD88_contour';
-DEM       = 'NCEI_Sandy_DEMs_13and19asec.HBcleanup20191111.nc';
+DEM       = '/Volumes/KeithJaredR/MESHING_DATASETS/DEMS/NCEI_Sandy_DEMs_13and19asec.KRcleanup20191111.nc';
 
 DT        = 0.5;            % DESIRABLE STABLE TIMESTEP
 H0        = [40,10];        % MINIMUM MESH RESOLUTION IN METERS
@@ -82,11 +83,13 @@ m = interp(m,gdat);
 
 m4 = lim_bathy_slope(m,0.10);
 %% Plots and write to dis
-% plot(m2,'b'); % pretty plot
-% plot(m2,'bmesh');
-% plot(m2,'resolog');
-% plot(m2,'bd');
-m4 = make_bc(m4,'weirs',gdat{2}); 
+% plot(m4,'b')       % pretty plot
+% plot(m4,'bmesh')
+% plot(m4,'resolog')
+% plot(m4,'bd')
+m4 = make_bc(m4,'weirs',gdat{2});    % manually specify: mode 1, 5m above MSL.
 
 save FI m4
+
+%write(m4, 'FI_hires_mesh', '14')
 
