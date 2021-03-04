@@ -97,5 +97,5 @@ m4 = make_bc(m4,'weirs',gdat{2});
 
 save MI m4
 
-save MI_GDAT m4
+save MI_GDAT gdat
 
